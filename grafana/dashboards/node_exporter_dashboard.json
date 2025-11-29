@@ -1,0 +1,39 @@
+{
+  "id": null,
+  "uid": "node-overview",
+  "title": "Node Exporter Overview",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "CPU Usage on request of the class (non-idle)",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 8
+      },
+      "targets": [
+        {
+          "expr": "sum(rate(node_cpu_seconds_total{mode!=\"idle\"}[1m])) by (instance)"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Memory Available",
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 24,
+        "h": 8
+      },
+      "targets": [
+        {
+          "expr": "node_memory_MemAvailable_bytes"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 22,
+  "version": 1
+}
