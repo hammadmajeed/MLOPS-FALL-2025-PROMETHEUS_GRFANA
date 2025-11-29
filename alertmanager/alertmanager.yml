@@ -1,0 +1,55 @@
+global:
+  resolve_timeout: 5m
+
+# Root route
+route:
+  receiver: 'default-slack'        # Fallback receiver
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1h
+
+  routes:
+    - match:
+        severity: critical
+      receiver: 'critical-slack'
+      continue: true
+
+    - match:
+        severity: warning
+      receiver: 'warning-slack'
+      continue: true
+
+    - match:
+        severity: info
+      receiver: 'info-slack'
+      continue: true
+
+# Receivers
+receivers:
+  - name: 'critical-slack'
+    slack_configs:
+      - api_url: ""
+        channel: '#critical'
+        title: '{{ .CommonAnnotations.summary }}'
+        text: '{{ range .Alerts }}*Alert:* {{ .Labels.alertname }}\n*Severity:* {{ .Labels.severity }}\n*Description:* {{ .Annotations.description }}\n{{ end }}'
+
+  - name: 'warning-slack'
+    slack_configs:
+      - api_url: ""
+        channel: '#warning'
+        title: '{{ .CommonAnnotations.summary }}'
+        text: '{{ range .Alerts }}*Alert:* {{ .Labels.alertname }}\n*Severity:* {{ .Labels.severity }}\n*Description:* {{ .Annotations.description }}\n{{ end }}'
+
+  - name: 'info-slack'
+    slack_configs:
+      - api_url: ""
+        channel: '#all-mlopsspring2025'
+        title: '{{ .CommonAnnotations.summary }}'
+        text: '{{ range .Alerts }}*Alert:* {{ .Labels.alertname }}\n*Severity:* {{ .Labels.severity }}\n*Description:* {{ .Annotations.description }}\n{{ end }}'
+
+  - name: 'default-slack'
+    slack_configs:
+      - api_url: ""
+        channel: '#alerts'
+        title: '{{ .CommonAnnotations.summary }}'
+        text: '{{ range .Alerts }}*Alert:* {{ .Labels.alertname }}\n*Severity:* {{ .Labels.severity }}\n*Description:* {{ .Annotations.description }}\n{{ end }}'
