@@ -1,0 +1,5 @@
+groups:
+  - name: recording_rules
+    rules:
+      - record: job:node_cpu_seconds:rate1m
+        expr: sum by (instance) (rate(node_cpu_seconds_total[1m]))

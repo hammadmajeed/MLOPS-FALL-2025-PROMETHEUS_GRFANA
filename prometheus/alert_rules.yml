@@ -1,0 +1,30 @@
+groups:
+  - name: example-alerts
+    rules:
+      - alert: HighCPUUsage
+        expr: sum(rate(node_cpu_seconds_total{mode!="idle"}[2m])) by (instance) > 0.8
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage on {{ $labels.instance }}"
+          description: "CPU usage is > 80% for more than 2 minutes."
+
+      - alert: PythonAppHighTemp
+        expr: app_temperature_celsius > 75
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "App temperature high"
+          description: "Application temperature metric exceeded threshold."
+
+  - name: blackbox
+    rules:
+      - alert: EndpointDown
+        expr: probe_success == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          description: "The endpoint {{ $labels.instance }} is down."
