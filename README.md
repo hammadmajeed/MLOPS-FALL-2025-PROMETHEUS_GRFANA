@@ -11,6 +11,7 @@ example exporters, dashboards, and Kubernetes manifests for learning and testing
 - app/python-exporter/ — simple Python app that exposes Prometheus metrics
 - k8s/ — Kubernetes manifests (optional)
 - scripts/ — helper scripts for load testing and automation
+- TUTORIAL.md — student-facing Prometheus and Grafana tutorial using this lab
 
 ## Quickstart (Docker Compose)
 1. Install Docker & Docker Compose.
